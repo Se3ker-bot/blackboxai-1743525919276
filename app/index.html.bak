@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Arduino Motor Control</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://unpkg.com/blockly@9.0.0/blockly.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <h1>H's RoboMov Controller</h1>
+      <div class="connection-status">
+        <span id="status">Disconnected</span>
+        <div id="debug-indicator" class="debug-indicator">
+          <i class="fas fa-bug"></i> DEBUG
+        </div>
+        <button id="connect-btn"><i class="fas fa-bluetooth-b"></i> Connect</button>
+        <label class="debug-switch">
+          <input type="checkbox" id="debug-mode">
+          <span class="slider">
+            <i class="fas fa-check debug-checkmark"></i>
+          </span>
+          <span class="debug-label">Debug Mode</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="tab-container">
+      <button class="tab-btn active" data-tab="live">Live Control</button>
+      <button class="tab-btn" data-tab="program">Program Mode</button>
+    </div>
+
+    <div id="live-tab" class="tab-content active">
+      <div class="control-panel">
+        <div class="d-pad">
+          <button id="btn-forward" class="direction-btn"><i class="fas fa-arrow-up"></i></button>
+          <div class="horizontal-btns">
+            <button id="btn-left" class="direction-btn"><i class="fas fa-arrow-left"></i></button>
+            <button id="btn-stop" class="emergency-btn"><i class="fas fa-stop"></i></button>
+            <button id="btn-right" class="direction-btn"><i class="fas fa-arrow-right"></i></button>
+          </div>
+          <button id="btn-back" class="direction-btn"><i class="fas fa-arrow-down"></i></button>
+        </div>
+
+        <div class="speed-control">
+          <h3>Motor Speed: <span id="speed-value">128</span></h3>
+          <input type="range" id="speed-slider" min="0" max="255" value="128">
+        </div>
+
+        <div class="motor-selector">
+          <h3>Active Motors:</h3>
+          <div class="motor-checkboxes">
+            <label><input type="checkbox" name="motor" value="1" checked> Motor 1</label>
+            <label><input type="checkbox" name="motor" value="2" checked> Motor 2</label>
+            <label><input type="checkbox" name="motor" value="3" checked> Motor 3</label>
+            <label><input type="checkbox" name="motor" value="4" checked> Motor 4</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="program-tab" class="tab-content">
+      <div id="blocklyDiv" style="height: 400px; width: 100%;"></div>
+      <div class="workspace-controls">
+        <button id="run-sequence"><i class="fas fa-play"></i> Run</button>
+        <button id="save-sequence"><i class="fas fa-save"></i> Save</button>
+        <button id="load-sequence"><i class="fas fa-folder-open"></i> Load</button>
+        <button id="clear-workspace"><i class="fas fa-trash"></i> Clear</button>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <div id="battery-indicator">
+        <i class="fas fa-battery-three-quarters"></i>
+        <span>--%</span>
+      </div>
+      <div id="last-command">Ready</div>
+    </div>
+  </div>
+
+  <xml id="toolbox" style="display:none">
+    <category name="🚗 Movement" colour="200">
+      <block type="motor_move"></block>
+      <block type="motor_stop"></block>
+    </category>
+    <category name="⏱ Timing" colour="65">
+      <block type="wait"></block>
+    </category>
+    <category name="📊 Variables" colour="330">
+      <block type="variables_get"></block>
+    </category>
+    <category name="🔁 Loops" colour="230">
+      <block type="loop"></block>
+      <block type="controls_repeat_ext"></block>
+    </category>
+    <category name="🧮 Math" colour="90">
+      <block type="math_number"></block>
+      <block type="math_arithmetic"></block>
+      <block type="math_constrain"></block>
+      <block type="math_map"></block>
+    </category>
+  </xml>
+
+  <script src="https://unpkg.com/blockly@9.0.0/blockly.min.js"></script>
+  <script src="blocks/enhanced_blocks.js"></script>
+  <script src="blocks/variables.js"></script>
+  <script src="blocks/math_operations.js"></script>
+  <script src="sequence.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
